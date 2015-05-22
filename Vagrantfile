@@ -4,9 +4,10 @@ Vagrant.configure(2) do |config|
   config.vm.provision :shell, :path => "provision.sh"
 
   # config.vm.network "private_network", ip: "192.168.33.10"
-  # config.vm.synced_folder "../data", "/vagrant_data"
+  # config.vm.synced_folder "../data", "/vagrant_data”, type: "nfs"
 
   config.vm.provider "virtualbox" do |vb|
+    vb.cpus = 2
     vb.memory = "2048"
   end
 end
