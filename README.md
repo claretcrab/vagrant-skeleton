@@ -10,8 +10,8 @@ https://www.virtualbox.org/wiki/Downloads
 Open the terminal and execute these commands
 ```
 git checkout https://github.com/claretcrab/vagrant-skeleton.git
-cd vagrant-skeleton
-vagrant box add hashicorp/precise32
+cd vagrant-skeleton/vagrant
+vagrant box add hashicorp/precise64
 vagrant up
 ```
 By default your web server can be accessed in http://127.0.0.1:8080
