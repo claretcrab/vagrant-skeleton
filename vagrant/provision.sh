@@ -1,25 +1,26 @@
 #!/usr/bin/env bash
 
-#update
-sudo apt-get update
+echo "Installing basic packages..."
+sudo apt-get install -y vim curl build-essential python-software-properties git > /dev/null
 
-#basic packages
-sudo apt-get install -y vim curl build-essential python-software-properties git 
+echo "Installing Apache..."
+sudo apt-get install -y apache2 > /dev/null
 
-#apache
-sudo apt-get install -y apache2
-rm -rf /var/www
-ln -fs /vagrant /var/www
+echo "Updating PHP repository..."
+sudo add-apt-repository ppa:ondrej/php5 > /dev/null
+sudo apt-get update > /dev/null
 
-#php55
-sudo add-apt-repository ppa:ondrej/php5
-sudo apt-get update
-sudo apt-get -y install php5 php5-common libapache2-mod-php5 php5-cli php5-curl php5-gd php5-mcrypt php5-mysql php-apc
+echo "Installing PHP and extensions..."
+sudo apt-get -y install php5 php5-common libapache2-mod-php5 php5-cli php5-curl php5-gd php5-mcrypt php5-mysql php-apc php5-intl > /dev/null
 
-#mysql
-sudo apt-get -y install mysql-server mysql-client mysql-server-5.5 phpmyadmin
+echo "Installing MySQL..."
+sudo apt-get -y install debconf-utils > /dev/null
+debconf-set-selections <<< "mysql-server mysql-server/root_password password 1234"
+debconf-set-selections <<< "mysql-server mysql-server/root_password_again password 1234"
+sudo apt-get -y install mysql-server mysql-client > /dev/null
 
-#other
-sudo apt-get install -y php5-intl
-sudo apt-get install -y redis-server php5-redis
-sudo apt-get install -y imagemagick php5-imagick --fix-missing 
+echo "Installing Redis..."
+sudo apt-get install -y redis-server php5-redis > /dev/null
+
+echo "Installing Other features..."
+sudo apt-get install -y imagemagick php5-imagick --fix-missing > /dev/null

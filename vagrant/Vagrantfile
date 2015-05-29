@@ -1,27 +1,25 @@
 box      = 'hashicorp/precise64'
 url      = 'http://files.vagrantup.com/precise32.box'
 hostname = 'myprecisebox'
-domain   = 'example.com'
-ip       = '192.168.0.42'
+ip       = '10.10.10.10'
 ram      = '2048'
 cpus     = '2'
 
 Vagrant.configure(2) do |config|
   config.vm.box = box
-  config.vm.host_name = hostname + '.' + domain
   config.vm.network :forwarded_port, guest: 80, host: 8080, auto_correct: true
   config.vm.provision :shell, :path => "provision.sh"
 
   # config.vm.network "private_network", ip: ip
-  # config.vm.synced_folder "./project", "/vagrant", type: "nfs"
+  config.vm.synced_folder "./", "/var/www", create: true, group: "www-data", owner: "www-data", type: "nfs"
 
   config.vm.provider "virtualbox" do |vb|
     vb.customize [
-    	'modifyvm', :id,
-    	'--name', hostname, 
-    	'--memory', ram, 
-    	'--cpus', cpus, 
-    	'--ioapic', 'on'
+        'modifyvm', :id,
+        '--name', hostname, 
+        '--memory', ram, 
+        '--cpus', cpus, 
+        '--ioapic', 'on'
     ]
   end
 end
